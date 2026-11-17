@@ -1,0 +1,25 @@
+# Model 1 (21-brand YOLOv8) TRAINING class order. Copied from the source data.yaml of brand_21brands_yolo_v2
+# (also D:/code/anhoa/crop/data.yaml). IDs here are training IDs, separate from configs/brands.yaml registry IDs.
+nc: 21
+names:
+  0: AXE
+  1: BEST_FOODS
+  2: CLEAR
+  3: CLOSE_UP
+  4: COMFORT
+  5: DOVE
+  6: HAZELINE
+  7: KNORR
+  8: LIFEBUOY
+  9: LUX
+  10: OMO
+  11: PONDS
+  12: PS
+  13: REXONA
+  14: SIMPLE
+  15: SUNLIGHT
+  16: SUNSILK
+  17: SURF
+  18: TRESEMME
+  19: VASELINE
+  20: VIM

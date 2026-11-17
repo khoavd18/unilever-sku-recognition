@@ -1,0 +1,45 @@
+# First classification baseline for the 459 exact-mapped SKUs.
+# Explicit --run-name is required; preparation and --preflight never train.
+dataset:
+  path: data/sku469_v33_training_v1
+  crop_root: data/sku469_v33
+  split_dir: data/sku469_v33_training_v1/manifests
+  class_mapping: data/sku469_v33_training_v1/class_mapping.json
+  preparation_report: data/sku469_v33_training_v1/preparation_report.json
+  require_all_classes: true
+  require_group_disjoint: true
+  image_size: 224
+  num_workers: 2
+  seed: 42
+
+augmentation:
+  horizontal_flip: false
+  rotation_degrees: 5.0
+
+model:
+  name: mobilenet_v3_large
+  pretrained: true
+  num_classes: auto
+  embedding_dim: 256
+  dropout: 0.2
+
+training:
+  batch_size: 32
+  num_epochs: 30
+  head_epochs: 3
+  learning_rate: 0.001
+  backbone_learning_rate: 0.0001
+  weight_decay: 0.0001
+  label_smoothing: 0.0
+  early_stopping_patience: 6
+  amp: true
+  device: auto
+  resume: null
+
+metric_learning:
+  enabled: false
+
+output:
+  checkpoint_dir: checkpoints/sku459_mobilenetv3
+  output_dir: outputs/sku459_mobilenetv3
+  require_run_name: true

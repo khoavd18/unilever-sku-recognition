@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "Shelf Capture MVP",
+    "slug": "shelf-capture-mvp",
+    "version": "0.1.0",
+    "orientation": "default",
+    "userInterfaceStyle": "dark",
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Cho phép ứng dụng chụp ảnh kệ hàng để ghép panorama và nhận diện sản phẩm."
+        }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Cho phép dùng cảm biến chuyển động để báo khi điện thoại đã ổn định."
+        }
+      ],
+      "expo-screen-orientation",
+      "expo-sharing",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Cho phép ứng dụng truy cập thư viện ảnh để lưu panorama.",
+          "savePhotosPermission": "Cho phép ứng dụng lưu panorama vào thư viện ảnh.",
+          "granularPermissions": ["photo"]
+        }
+      ]
+    ],
+    "android": {
+      "package": "com.anhoa.shelfcapturemvp",
+      "permissions": [
+        "CAMERA",
+        "HIGH_SAMPLING_RATE_SENSORS"
+      ]
+    },
+    "ios": {
+      "infoPlist": {
+        "NSCameraUsageDescription": "Chụp ảnh kệ hàng để ghép panorama và nhận diện sản phẩm.",
+        "NSMotionUsageDescription": "Báo khi điện thoại đã ổn định để chụp ảnh rõ hơn."
+      }
+    }
+  }
+}

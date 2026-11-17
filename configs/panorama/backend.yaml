@@ -1,0 +1,50 @@
+recognition:
+  # Quantized ONNX Runtime detector. Class IDs are the model's immutable order.
+  yolo_weights: deployment/assets/models/yolov8_brand21_int8.onnx
+  detector_class_names:
+    0: AXE
+    1: BEST_FOODS
+    2: CLEAR
+    3: CLOSE_UP
+    4: COMFORT
+    5: DOVE
+    6: HAZELINE
+    7: KNORR
+    8: LIFEBUOY
+    9: LUX
+    10: OMO
+    11: PONDS
+    12: PS
+    13: REXONA
+    14: SIMPLE
+    15: SUNLIGHT
+    16: SUNSILK
+    17: SURF
+    18: TRESEMME
+    19: VASELINE
+    20: VIM
+  embedding_checkpoint: deployment/assets/models/mobilenetv3_sku459.pth
+  catalog: deployment/assets/catalog/product_catalog.json
+  gallery_dir: deployment/assets/gallery
+  mapping: deployment/assets/mapping.json
+  device: auto
+  detector_confidence: 0.25
+  detector_image_size: 960
+  tile_size: 1280
+  tile_overlap: 0.20
+  tile_nms_iou: 0.50
+  min_valid_tile_ratio: 0.15
+  min_valid_crop_ratio: 0.60
+  # The gallery candidate is shown until a validation-calibrated threshold is set.
+  minimum_similarity: null
+  similarity_threshold_calibrated: false
+
+backend:
+  session_root: runtime/sessions
+  max_uploads: 6
+  max_stitch_uploads: 6
+  max_upload_bytes: 25000000
+  max_input_megapixels: 24
+  max_stitch_canvas_megapixels: 60
+  allowed_extensions: [.jpg, .jpeg, .png]
+  cors_origins: ["*"]

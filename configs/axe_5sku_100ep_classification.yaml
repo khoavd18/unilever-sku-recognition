@@ -1,0 +1,50 @@
+dataset:
+  path: data/axe_crops
+  source_coco_path: data/axe_dataset_clean
+  split_dir: data/axe_crops/manifests
+  crop_manifest: data/axe_crops/crop_manifest.csv
+  image_size: 224
+  num_workers: 0
+  seed: 42
+
+augmentation:
+  horizontal_flip: false
+  rotation_degrees: 5.0
+  brightness: 0.12
+  contrast: 0.12
+  saturation: 0.08
+  hue: 0.02
+
+model:
+  name: mobilenet_v3_large
+  pretrained: true
+  embedding_dim: 256
+  dropout: 0.20
+
+training:
+  mode: classification_only
+  batch_size: 16
+  num_epochs: 100
+  head_epochs: 3
+  learning_rate: 0.001
+  backbone_learning_rate: 0.00003
+  weight_decay: 0.0001
+  label_smoothing: 0.0
+  early_stopping_enabled: false
+  early_stopping_patience: null
+  amp: true
+  device: auto
+  optimizer: AdamW
+  scheduler: stage_local_cosine
+  checkpoint_metric: val_macro_f1_then_val_ce_loss
+  checkpoint_tie: keep_earlier
+  resume: null
+
+metric_learning:
+  enabled: false
+  triplet_loss: false
+  arcface: false
+
+output:
+  output_root: outputs/axe_5sku
+  checkpoint_root: checkpoints/axe_5sku

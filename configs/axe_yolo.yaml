@@ -1,0 +1,64 @@
+# Model 1: single-class AXE detector baseline.
+# Dataset conversion already maps only AXE_* source classes to class 0. Keep
+# single_cls false so unrelated source classes can never be collapsed to AXE.
+model: yolov8n.pt
+data: data/axe_yolo/data.yaml
+project: runs/model1_axe
+name: yolov8n_100ep_s42
+
+train:
+  epochs: 100
+  imgsz: 640
+  batch: 8
+  workers: 0
+  device: 0
+  amp: true
+  seed: 42
+  deterministic: true
+  patience: 0          # Supported by Ultralytics 8.3.155: disable EarlyStopping.
+  single_cls: false
+  pretrained: true
+  resume: false
+  exist_ok: false
+  save: true
+  save_period: -1
+  plots: true
+  val: true
+  cache: false
+
+  # Optimizer policy. With optimizer=auto, Ultralytics selects the concrete
+  # optimizer/LR for this run and records the resolved values in args.yaml.
+  optimizer: auto
+  weight_decay: 0.0005
+  cos_lr: false
+  close_mosaic: 10
+
+  # Detection augmentation settings, made explicit for reproducibility.
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  degrees: 0.0
+  translate: 0.1
+  scale: 0.5
+  shear: 0.0
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.0
+  mosaic: 1.0
+  mixup: 0.0
+  copy_paste: 0.0
+
+artifacts:
+  native_ultralytics:
+    - results.csv
+    - results.png
+    - weights/best.pt
+    - weights/last.pt
+    - confusion_matrix.png
+    - PR_curve.png
+  final_summary: validation_summary_vi.md
+  evaluate_test_split: false
+
+compatibility:
+  verified_ultralytics: 8.3.155
+  install_or_upgrade_automatically: false

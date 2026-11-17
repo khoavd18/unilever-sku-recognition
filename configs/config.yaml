@@ -1,0 +1,45 @@
+# All paths are relative to the project root unless made absolute.
+dataset:
+  path: data/product_crops
+  source_coco_path: data/product_dataset
+  split_dir: data/product_crops/manifests
+  image_size: 224
+  num_workers: 2
+  seed: 42
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+augmentation:
+  horizontal_flip: false  # Product packaging text/logos must not be mirrored by default.
+  rotation_degrees: 5.0
+
+model:
+  name: mobilenet_v3_large
+  pretrained: true
+  num_classes: auto  # inferred from split manifests; never hard-code product count
+  embedding_dim: 256
+  dropout: 0.20
+
+training:
+  batch_size: 32
+  num_epochs: 20
+  head_epochs: 3
+  learning_rate: 0.001
+  backbone_learning_rate: 0.0001
+  weight_decay: 0.0001
+  label_smoothing: 0.0
+  early_stopping_patience: 6
+  amp: true
+  device: auto
+  resume: null
+
+metric_learning:
+  enabled: false
+  loss_weight: 0.1
+  margin: 0.2
+  samples_per_class: 2
+
+output:
+  checkpoint_dir: checkpoints
+  output_dir: outputs

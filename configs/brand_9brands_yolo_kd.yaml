@@ -1,0 +1,42 @@
+# Controlled teacher/student experiment for the reviewed nine-brand detector.
+# Both students remain ordinary YOLO detection models so the backend contract
+# and the prepared bounding-box dataset do not change.
+base_config: configs/brand_9brands_yolo.yaml
+project: runs/model1_brand9_distillation
+
+compatibility:
+  verified_ultralytics: 8.3.155
+
+teacher:
+  model: yolov8m.pt
+  name: teacher_yolov8m_100ep_s42
+  epochs: 100
+  batch: 4
+  patience: 20
+
+student:
+  model: yolov8n.pt
+  baseline_name: student_yolov8n_baseline_100ep_s42
+  kd_name: student_yolov8n_kd_100ep_s42
+  epochs: 100
+  batch: 8
+  patience: 0
+
+kd:
+  # Conservative defaults: KD supplements rather than dominates supervised loss.
+  # Use kd_metrics.csv plus the non-KD student before tuning these weights.
+  class_weight: 0.25
+  dfl_weight: 0.25
+  temperature: 2.0
+  topk: 64
+  min_confidence: 0.05
+
+evaluation:
+  split: val
+  batch: 8
+
+export:
+  output_dir: deploy/model1_brand9/android
+  image_size: 640
+  calibration_fraction: 1.0
+
